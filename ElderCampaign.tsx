@@ -1,80 +1,88 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 
 import { ElderNav } from "./navTypes";
 import { colors, spacing, radius, fontSize, fontWeight } from "./theme";
-import { Screen, AppHeader, Card, Button, Body, Caption, Pill } from "./ui";
+import { GreenScreen, Avatar } from "./ui";
 
-const GAMES = [
-  { icon: "grid", title: "카드 짝 맞추기", desc: "같은 그림을 찾아요", points: 50 },
-  { icon: "text", title: "낱말 잇기", desc: "끝말잇기로 어휘력 UP", points: 40 },
-  { icon: "calculator", title: "숫자 계산", desc: "간단한 암산 게임", points: 30 },
-];
-
-const EVENTS = [
-  { title: "마을회관 기억력 교실", when: "매주 화 · 오전 10시", place: "행복경로당" },
-  { title: "치매 예방 걷기 대회", when: "7월 20일 · 오전 9시", place: "중앙공원" },
+const CAMPAIGNS = [
+  {
+    title: "2025 노인 인지 건강 지원",
+    badge: "참여 가능",
+    badgeColor: colors.primary,
+    org: "서울시 노인복지과",
+    desc: "매일 AI 대화 참여 시 지역사회 인지 건강 지수에 기여해요.",
+    reward: "포인트 500P",
+  },
+  {
+    title: "어르신 치매 예방 교육",
+    badge: "마감 D-5",
+    badgeColor: colors.accent,
+    org: "강북구 보건소",
+    desc: "영상 교육 이수 후 퀴즈를 완료하면 지역 상품권이 제공돼요.",
+    reward: "상품권 5,000원",
+  },
 ];
 
 export default function ElderCampaignScreen() {
   const navigation = useNavigation<ElderNav>();
 
   return (
-    <Screen>
-      <AppHeader title="지역 캠페인 · 게임" onBack={() => navigation.goBack()} />
-
-      <Card color={colors.accent} style={{ marginTop: spacing.lg }}>
-        <Pill label="이번 주 이벤트" color="rgba(255,255,255,0.2)" textColor={colors.white} icon="sparkles" />
-        <Text style={styles.heroTitle}>기억력 게임하고{"\n"}마을 포인트 받기 🎁</Text>
-        <Body style={{ color: colors.white, marginTop: spacing.xs }}>내 포인트: 320P</Body>
-      </Card>
-
-      <Text style={styles.section}>두뇌 게임</Text>
-      <View style={{ gap: spacing.md }}>
-        {GAMES.map((g) => (
-          <Card key={g.title}>
-            <View style={styles.row}>
-              <View style={styles.iconWrap}>
-                <Ionicons name={g.icon as keyof typeof Ionicons.glyphMap} size={24} color={colors.primary} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.gameTitle}>{g.title}</Text>
-                <Caption style={{ marginTop: 2 }}>{g.desc}</Caption>
-              </View>
-              <Pill label={`+${g.points}P`} color={colors.secondary} textColor={colors.secondaryForeground} />
-            </View>
-            <Button label="게임 시작" variant="secondary" small style={{ marginTop: spacing.md }} onPress={() => {}} />
-          </Card>
-        ))}
+    <GreenScreen
+      title="지역 재정 캠페인"
+      subtitle="참여하면 포인트와 혜택을 드려요"
+      onBack={() => navigation.goBack()}
+    >
+      {/* Character intro */}
+      <View style={styles.charRow}>
+        <Avatar size={64} emoji="🐶" />
+        <Text style={styles.charText}>참여할수록 지역 치매{"\n"}예방에 도움이 돼요!</Text>
       </View>
 
-      <Text style={styles.section}>우리 동네 소식</Text>
-      <View style={{ gap: spacing.md }}>
-        {EVENTS.map((e) => (
-          <Card key={e.title}>
-            <Text style={styles.gameTitle}>{e.title}</Text>
-            <View style={[styles.metaRow, { marginTop: spacing.sm }]}>
-              <Ionicons name="time-outline" size={16} color={colors.mutedForeground} />
-              <Caption style={{ marginLeft: 6 }}>{e.when}</Caption>
+      <View style={{ gap: spacing.lg, marginTop: spacing.lg }}>
+        {CAMPAIGNS.map((c) => (
+          <View key={c.title} style={styles.card}>
+            <View style={styles.titleRow}>
+              <Text style={styles.title}>{c.title}</Text>
+              <View style={[styles.badge, { backgroundColor: c.badgeColor }]}>
+                <Text style={styles.badgeText}>{c.badge}</Text>
+              </View>
             </View>
-            <View style={styles.metaRow}>
-              <Ionicons name="location-outline" size={16} color={colors.mutedForeground} />
-              <Caption style={{ marginLeft: 6 }}>{e.place}</Caption>
+            <Text style={styles.org}>{c.org}</Text>
+            <Text style={styles.desc}>{c.desc}</Text>
+            <View style={styles.footerRow}>
+              <Text style={styles.reward}>{c.reward}</Text>
+              <Pressable style={styles.applyBtn} accessibilityRole="button" accessibilityLabel="신청하기">
+                <Text style={styles.applyText}>신청하기</Text>
+              </Pressable>
             </View>
-          </Card>
+          </View>
         ))}
       </View>
-    </Screen>
+    </GreenScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  heroTitle: { fontSize: fontSize.subtitle, fontWeight: fontWeight.bold, color: colors.white, marginTop: spacing.md, lineHeight: 30 },
-  section: { fontSize: fontSize.bodyLg, fontWeight: fontWeight.bold, color: colors.foreground, marginTop: spacing.xl, marginBottom: spacing.md },
-  row: { flexDirection: "row", alignItems: "center", gap: spacing.md },
-  iconWrap: { width: 48, height: 48, borderRadius: radius.md, backgroundColor: colors.secondary, alignItems: "center", justifyContent: "center" },
-  gameTitle: { fontSize: fontSize.body, fontWeight: fontWeight.bold, color: colors.foreground },
-  metaRow: { flexDirection: "row", alignItems: "center", marginTop: 4 },
+  charRow: { flexDirection: "row", alignItems: "center", gap: spacing.md },
+  charText: { flex: 1, fontSize: fontSize.body, color: colors.foreground, fontWeight: fontWeight.semibold, lineHeight: 24 },
+
+  card: {
+    backgroundColor: colors.card,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.lg,
+  },
+  titleRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  title: { fontSize: fontSize.bodyLg, fontWeight: fontWeight.bold, color: colors.foreground, flex: 1 },
+  badge: { borderRadius: radius.pill, paddingHorizontal: spacing.md, paddingVertical: 4, marginLeft: spacing.sm },
+  badgeText: { color: colors.white, fontSize: 12, fontWeight: fontWeight.bold },
+  org: { fontSize: fontSize.caption, color: colors.mutedForeground, marginTop: 6 },
+  desc: { fontSize: fontSize.body, color: colors.foreground, marginTop: spacing.md, lineHeight: 24 },
+  footerRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: spacing.lg },
+  reward: { fontSize: fontSize.body, fontWeight: fontWeight.bold, color: colors.primary },
+  applyBtn: { backgroundColor: colors.primary, borderRadius: radius.md, paddingHorizontal: spacing.xl, paddingVertical: spacing.md },
+  applyText: { color: colors.white, fontSize: fontSize.body, fontWeight: fontWeight.bold },
 });

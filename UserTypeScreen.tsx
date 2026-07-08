@@ -36,10 +36,12 @@ export default function UserTypeScreen() {
 
   const pick = (role: "elder" | "guardian") => {
     setRole(role);
-    navigation.reset({
-      index: 0,
-      routes: [{ name: role === "elder" ? "Elder" : "Guardian" }],
-    });
+    if (role === "elder") {
+      // 고령자: CIST 초기 검사(온보딩) 후 홈으로
+      navigation.navigate("Cist");
+    } else {
+      navigation.reset({ index: 0, routes: [{ name: "Guardian" }] });
+    }
   };
 
   return (

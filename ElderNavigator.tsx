@@ -7,7 +7,6 @@ import { ElderStackParamList, ElderTabParamList } from "./navTypes";
 import { colors, fontWeight, sizes } from "./theme";
 
 import ElderHomeScreen from "./ElderHome";
-import ElderCistScreen from "./ElderCist";
 import ElderAiChatScreen from "./ElderAiChat";
 import ElderResultScreen from "./ElderResult";
 import ElderNotificationsScreen from "./ElderNotifications";
@@ -35,7 +34,6 @@ function ElderTabs() {
         tabBarIcon: ({ color, size }) => {
           const map: Record<keyof ElderTabParamList, keyof typeof Ionicons.glyphMap> = {
             ElderHome: "home",
-            ElderCist: "clipboard",
             ElderAiChat: "chatbubbles",
             ElderResult: "book",
             ElderNotifications: "notifications",
@@ -45,14 +43,9 @@ function ElderTabs() {
       })}
     >
       <Tab.Screen name="ElderHome" component={ElderHomeScreen} options={{ title: "홈" }} />
-      <Tab.Screen name="ElderCist" component={ElderCistScreen} options={{ title: "검사" }} />
-      <Tab.Screen name="ElderAiChat" component={ElderAiChatScreen} options={{ title: "AI문답" }} />
+      <Tab.Screen name="ElderAiChat" component={ElderAiChatScreen} options={{ title: "AI 대화" }} />
       <Tab.Screen name="ElderResult" component={ElderResultScreen} options={{ title: "일기" }} />
-      <Tab.Screen
-        name="ElderNotifications"
-        component={ElderNotificationsScreen}
-        options={{ title: "알림" }}
-      />
+      <Tab.Screen name="ElderNotifications" component={ElderNotificationsScreen} options={{ title: "알림" }} />
     </Tab.Navigator>
   );
 }

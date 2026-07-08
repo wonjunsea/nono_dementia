@@ -11,6 +11,7 @@ import { AppProvider } from "./AppContext";
 import SplashScreen from "./SplashScreen";
 import LoginScreen from "./LoginScreen";
 import UserTypeScreen from "./UserTypeScreen";
+import ElderCistScreen from "./ElderCist";
 import ElderNavigator from "./ElderNavigator";
 import GuardianNavigator from "./GuardianNavigator";
 
@@ -38,6 +39,7 @@ export default function App() {
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="UserType" component={UserTypeScreen} />
+            <Stack.Screen name="Cist" component={ElderCistScreen} />
             <Stack.Screen name="Elder" component={ElderNavigator} />
             <Stack.Screen name="Guardian" component={GuardianNavigator} />
           </Stack.Navigator>

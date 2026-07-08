@@ -91,6 +91,63 @@ export function AppHeader({
   );
 }
 
+/* ------------------------------------------------------------ GreenHeader */
+// 고령자 화면 상단의 초록 배너 헤더 (제목 + 부제)
+export function GreenHeader({
+  title,
+  subtitle,
+  onBack,
+}: {
+  title: string;
+  subtitle?: string;
+  onBack?: () => void;
+}) {
+  return (
+    <View style={styles.greenHeader}>
+      {onBack ? (
+        <Pressable onPress={onBack} accessibilityLabel="뒤로 가기" hitSlop={12} style={{ marginBottom: spacing.sm }}>
+          <Ionicons name="chevron-back" size={28} color={colors.white} />
+        </Pressable>
+      ) : null}
+      <Text style={styles.greenHeaderTitle}>{title}</Text>
+      {subtitle ? <Text style={styles.greenHeaderSub}>{subtitle}</Text> : null}
+    </View>
+  );
+}
+
+// 초록 헤더 + 스크롤 본문을 묶은 화면 래퍼 (고령자 화면 공통)
+export function GreenScreen({
+  title,
+  subtitle,
+  onBack,
+  children,
+  scroll = true,
+}: {
+  title: string;
+  subtitle?: string;
+  onBack?: () => void;
+  children: React.ReactNode;
+  scroll?: boolean;
+}) {
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }} edges={["top"]}>
+      <View style={{ flex: 1, backgroundColor: colors.background }}>
+        <GreenHeader title={title} subtitle={subtitle} onBack={onBack} />
+        {scroll ? (
+          <ScrollView
+            contentContainerStyle={{ padding: spacing.xl, paddingBottom: spacing.xxl }}
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={{ flex: 1, padding: spacing.xl }}>{children}</View>
+        )}
+      </View>
+    </SafeAreaView>
+  );
+}
+
 /* ------------------------------------------------------------------ Button */
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger";
@@ -267,6 +324,15 @@ const styles = StyleSheet.create({
   headerBtn: { width: 40, alignItems: "center", justifyContent: "center" },
   headerTitle: { fontSize: fontSize.subtitle, fontWeight: fontWeight.bold, color: colors.foreground },
   headerSubtitle: { fontSize: fontSize.caption, color: colors.mutedForeground, marginTop: 2 },
+
+  greenHeader: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.xl,
+  },
+  greenHeaderTitle: { color: colors.white, fontSize: fontSize.title, fontWeight: fontWeight.bold },
+  greenHeaderSub: { color: "rgba(255,255,255,0.9)", fontSize: fontSize.body, marginTop: 4 },
 
   button: {
     borderRadius: radius.md,

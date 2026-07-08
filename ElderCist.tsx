@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Pressable, Animated, Easing, DimensionValue } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import {
   useAudioRecorder,
   AudioModule,
@@ -9,6 +10,7 @@ import {
   setAudioModeAsync,
 } from "expo-audio";
 
+import { RootNav } from "./navTypes";
 import { colors, spacing, radius, fontSize, fontWeight } from "./theme";
 import { Button, Card, Caption, Avatar } from "./ui";
 
@@ -62,6 +64,7 @@ export default function ElderCistScreen() {
   const [done, setDone] = useState(false);
   const [micAllowed, setMicAllowed] = useState<boolean | null>(null);
 
+  const navigation = useNavigation<RootNav>();
   const recorder = useAudioRecorder(RecordingPresets.HIGH_QUALITY);
   const pulse = useRef(new Animated.Value(1)).current;
 
@@ -169,9 +172,14 @@ export default function ElderCistScreen() {
             <Caption style={{ color: colors.primary, fontWeight: fontWeight.bold }}>정상 범위</Caption>
           </Card>
           <Button
+            label="메모케어 시작하기"
+            style={{ marginTop: spacing.xl, alignSelf: "stretch" }}
+            onPress={() => navigation.reset({ index: 0, routes: [{ name: "Elder" }] })}
+          />
+          <Button
             label="다시 검사하기"
             variant="secondary"
-            style={{ marginTop: spacing.xl, alignSelf: "stretch" }}
+            style={{ marginTop: spacing.md, alignSelf: "stretch" }}
             onPress={() => {
               setStep(0);
               setPhase("idle");

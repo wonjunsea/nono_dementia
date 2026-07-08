@@ -17,7 +17,7 @@ export default function GuardianNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: colors.guardianPrimary,
         tabBarInactiveTintColor: colors.mutedForeground,
         tabBarStyle: {
           height: sizes.tabBarHeight,

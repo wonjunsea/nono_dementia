@@ -5,7 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { RootNav } from "./navTypes";
 import { colors, spacing, radius, fontSize, fontWeight } from "./theme";
-import { Button, Avatar } from "./ui";
+import { Button } from "./ui";
+import Character3D from "./Character3D";
 
 export default function SplashScreen() {
   const navigation = useNavigation<RootNav>();
@@ -13,7 +14,7 @@ export default function SplashScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
       <View style={styles.hero}>
-        <Avatar size={140} emoji="🐶" />
+        <Character3D size={220} />
         <Text style={styles.brand}>메모케어</Text>
         <Text style={styles.sub}>MEMOCARE · CIST 기반 AI 스크리닝</Text>
 

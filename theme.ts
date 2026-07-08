@@ -34,6 +34,11 @@ export const colors = {
   success: "#5A8F68",
   warning: "#D4A373",
   danger: "#C0392B",
+
+  // 보호자(Guardian) 모드 — 파란 테마
+  guardianPrimary: "#5B86C4",
+  guardianSecondary: "#EAF1FA",
+  guardianSecondaryFg: "#3A5B8A",
 } as const;
 
 // Chart palette (chart-1 ... chart-5 from theme.css)
